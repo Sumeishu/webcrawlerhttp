@@ -4,6 +4,17 @@ const {JSDOM} = require('jsdom')
     console.log(`actively crawling ${currentURL}`)
     try{
         const resp = await fetch(currentURL)
+        if(resp.status >399){
+            console.log(`error in status code: ${resp.status}, on page: ${currentURL}`)
+            return
+        }
+        const contentType = resp.headers.get('content-type')
+        if(!contentType.includes('text/html')){
+            console.log(`non html response, content type: ${contentType}, on page: ${currentURL}`)
+            return
+        }
+        const htmlBody = await resp.text()
+
         console.log(await resp.text())
     }catch(err){
         console.log(`error in fech: ${err.message}, on page: ${currentURL}`)
