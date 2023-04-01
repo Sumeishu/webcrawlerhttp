@@ -1,7 +1,18 @@
-const urlObj = new URL("https://blog.boot.dev/path/")
-console.log(urlObj.hostname)
-console.log(urlObj.pathname)
-hostpath =  `${urlObj.host}${urlObj.pathname}`
-console.log(hostpath)
-console.log(hostpath.slice(0,-1))
-console.log(hostpath.slice(0,-2))
+const {crawlPage} = require('./crawl.js')
+
+function main(){
+    if (process.argv.length < 3){
+        console.log('no website provided')
+        process.exit(1)
+    }
+    if (process.argv.length > 3){
+        console.log('too many arguments')
+        process.exit(1)
+    }
+    const baseURL = process.argv[2]
+
+    console.log(`start crawl of ${baseURL}`)
+    crawlPage(baseURL)
+}
+
+main()
